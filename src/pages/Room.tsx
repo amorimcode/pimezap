@@ -65,20 +65,20 @@ export function Room() {
     <div id="page-room">
       <header>
         <div className="content">
-          <img src={logoImg} alt="Letmeask" />
+          <h1>Pimezap</h1>
           <RoomCode code={roomId} />
         </div>
       </header>
 
       <main>
         <div className="room-title">
-          <h1>Sala {title}</h1>
+          <h1>Grupo {title}</h1>
           { questions.length > 0 && <span>{questions.length} pergunta(s)</span> }
         </div>
 
         <form onSubmit={handleSendQuestion}>
           <textarea
-            placeholder="O que você quer perguntar?"
+            placeholder="Escreva sua mensagem?"
             onChange={event => setNewQuestion(event.target.value)}
             value={newQuestion}
           />
@@ -90,9 +90,9 @@ export function Room() {
                 <span>{user.name}</span>
               </div>
             ) : (
-              <span>Para enviar uma pergunta, <button>faça seu login</button>.</span>
+              <span>Para enviar uma mensagem, <button>faça seu login</button>.</span>
             ) }
-            <Button type="submit" disabled={!user}>Enviar pergunta</Button>
+            <Button type="submit" disabled={!user}>Enviar</Button>
           </div>
         </form>
 
