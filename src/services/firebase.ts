@@ -4,13 +4,13 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID
+  apiKey: "AIzaSyDQErp4TrF2JxecD6k7uRgE9PPQe6tE4LE",
+  authDomain: "pimezap.firebaseapp.com",
+  databaseURL: "https://pimezap-default-rtdb.firebaseio.com",
+  projectId: "pimezap",
+  storageBucket: "pimezap.appspot.com",
+  messagingSenderId: "1035182004291",
+  appId: "1:1035182004291:web:3fc221d8ab480725fedcf6"
 };
 
 firebase.initializeApp(firebaseConfig);

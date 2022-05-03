@@ -17,6 +17,7 @@ export function NewRoom() {
 
   async function handleCreateRoom(event: FormEvent) {
     event.preventDefault();
+    alert('zap')
 
     if (newRoom.trim() === '') {
       return;
