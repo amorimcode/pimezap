@@ -59,14 +59,14 @@ export function AdminRoom() {
           <img src={logoImg} alt="Letmeask" />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined onClick={handleEndRoom}>Encerrar sala</Button>
+            <Button isOutlined onClick={handleEndRoom}>Encerrar grupo</Button>
           </div>
         </div>
       </header>
 
       <main>
         <div className="room-title">
-          <h1>Sala {title}</h1>
+          <h1>Grupo {title}</h1>
           { questions.length > 0 && <span>{questions.length} mensagem(s)</span> }
         </div>
 
