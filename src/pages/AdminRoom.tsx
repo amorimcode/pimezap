@@ -1,41 +1,41 @@
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from "react-router-dom";
 
-import logoImg from '../assets/images/logo.svg';
-import deleteImg from '../assets/images/delete.svg';
-import checkImg from '../assets/images/check.svg';
-import answerImg from '../assets/images/answer.svg';
+import logoImg from "../assets/images/pimechat.svg";
+import deleteImg from "../assets/images/delete.svg";
+import checkImg from "../assets/images/check.svg";
+import answerImg from "../assets/images/answer.svg";
 
-import { Button } from '../components/Button';
-import { Question } from '../components/Question';
-import { RoomCode } from '../components/RoomCode';
+import { Button } from "../components/Button";
+import { Question } from "../components/Question";
+import { RoomCode } from "../components/RoomCode";
 // import { useAuth } from '../hooks/useAuth';
-import { useRoom } from '../hooks/useRoom';
-import { database } from '../services/firebase';
+import { useRoom } from "../hooks/useRoom";
+import { database } from "../services/firebase";
 
-import '../styles/room.scss';
+import "../styles/room.scss";
 
 type RoomParams = {
   id: string;
-}
+};
 
 export function AdminRoom() {
   // const { user } = useAuth();
-  const history = useHistory()
+  const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
 
-  const { title, questions } = useRoom(roomId)
+  const { title, questions } = useRoom(roomId);
 
   async function handleEndRoom() {
     await database.ref(`rooms/${roomId}`).update({
       endedAt: new Date(),
-    })
+    });
 
-    history.push('/');
+    history.push("/");
   }
 
   async function handleDeleteQuestion(questionId: string) {
-    if (window.confirm('Tem certeza que você deseja excluir esta mensagem??')) {
+    if (window.confirm("Tem certeza que você deseja excluir esta mensagem??")) {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
     }
   }
@@ -43,13 +43,13 @@ export function AdminRoom() {
   async function handleCheckQuestionAsAnswered(questionId: string) {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isAnswered: true,
-    })
+    });
   }
 
   async function handleHighlightQuestion(questionId: string) {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isHighlighted: true,
-    })
+    });
   }
 
   return (
@@ -59,7 +59,9 @@ export function AdminRoom() {
           <img src={logoImg} alt="Letmeask" />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined onClick={handleEndRoom}>Encerrar grupo</Button>
+            <Button isOutlined onClick={handleEndRoom}>
+              Encerrar grupo
+            </Button>
           </div>
         </div>
       </header>
@@ -67,11 +69,11 @@ export function AdminRoom() {
       <main>
         <div className="room-title">
           <h1>Grupo {title}</h1>
-          { questions.length > 0 && <span>{questions.length} mensagem(s)</span> }
+          {questions.length > 0 && <span>{questions.length} mensagem(s)</span>}
         </div>
 
         <div className="question-list">
-          {questions.map(question => {
+          {questions.map((question) => {
             return (
               <Question
                 key={question.id}
@@ -86,7 +88,10 @@ export function AdminRoom() {
                       type="button"
                       onClick={() => handleCheckQuestionAsAnswered(question.id)}
                     >
-                      <img src={checkImg} alt="Marcar mensagem como respondida" />
+                      <img
+                        src={checkImg}
+                        alt="Marcar mensagem como respondida"
+                      />
                     </button>
                     <button
                       type="button"

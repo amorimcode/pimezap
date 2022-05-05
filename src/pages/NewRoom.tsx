@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import illustrationImg from "../assets/images/illustration.svg";
+import illustrationImg from "../assets/images/Bom-dia-grupo-especial.webp";
 import logoImg from "../assets/images/pimechat.png";
 
 import { Button } from "../components/Button";
