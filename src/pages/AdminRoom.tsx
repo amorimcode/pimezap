@@ -35,7 +35,7 @@ export function AdminRoom() {
   }
 
   async function handleDeleteQuestion(questionId: string) {
-    if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
+    if (window.confirm('Tem certeza que você deseja excluir esta mensagem??')) {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
     }
   }
@@ -67,7 +67,7 @@ export function AdminRoom() {
       <main>
         <div className="room-title">
           <h1>Sala {title}</h1>
-          { questions.length > 0 && <span>{questions.length} pergunta(s)</span> }
+          { questions.length > 0 && <span>{questions.length} mensagem(s)</span> }
         </div>
 
         <div className="question-list">
@@ -86,13 +86,13 @@ export function AdminRoom() {
                       type="button"
                       onClick={() => handleCheckQuestionAsAnswered(question.id)}
                     >
-                      <img src={checkImg} alt="Marcar pergunta como respondida" />
+                      <img src={checkImg} alt="Marcar mensagem como respondida" />
                     </button>
                     <button
                       type="button"
                       onClick={() => handleHighlightQuestion(question.id)}
                     >
-                      <img src={answerImg} alt="Dar destaque à pergunta" />
+                      <img src={answerImg} alt="Dar destaque à mensagem" />
                     </button>
                   </>
                 )}
@@ -100,7 +100,7 @@ export function AdminRoom() {
                   type="button"
                   onClick={() => handleDeleteQuestion(question.id)}
                 >
-                  <img src={deleteImg} alt="Remover pergunta" />
+                  <img src={deleteImg} alt="Remover mensagem" />
                 </button>
               </Question>
             );

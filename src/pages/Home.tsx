@@ -50,7 +50,7 @@ export function Home() {
   return (
     <div id="page-auth">
       <aside>
-        <img src={illustrationImg} alt="Ilustração simbolizando perguntas e respostas" />
+        <img src={illustrationImg} alt="Ilustração simbolizando mensagens e respostas" />
         <strong>Crie seu grupo do ZAP</strong>
         <p>Bate papo e memes em tempo real</p>
       </aside>
