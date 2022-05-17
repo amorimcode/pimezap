@@ -71,17 +71,17 @@ export function Room() {
     const result = await auth.signInWithPopup(provider);
 
     if (result.user) {
-      const { displayName, photoURL, uid } = result.user
+      const { displayName, photoURL, uid } = result.user;
 
       if (!displayName || !photoURL) {
-        throw new Error('Missing information from Google Account.');
+        throw new Error("Missing information from Google Account.");
       }
 
       setUser({
         id: uid,
         name: displayName,
-        avatar: photoURL
-      })
+        avatar: photoURL,
+      });
     }
   }
 
@@ -99,30 +99,6 @@ export function Room() {
           <h1>Grupo {title}</h1>
           {questions.length > 0 && <span>{questions.length} mensagem(s)</span>}
         </div>
-
-        <form onSubmit={handleSendQuestion}>
-          <textarea
-            placeholder="Escreva sua mensagem?"
-            onChange={(event) => setNewQuestion(event.target.value)}
-            value={newQuestion}
-          />
-
-          <div className="form-footer">
-            {user ? (
-              <div className="user-info">
-                <img src={user.avatar} alt={user.name} />
-                <span>{user.name}</span>
-              </div>
-            ) : (
-              <span>
-                Para enviar uma mensagem, <button onClick={signInWithGoogle}>faça seu login</button>.
-              </span>
-            )}
-            <Button type="submit" disabled={!user}>
-              Enviar
-            </Button>
-          </div>
-        </form>
 
         <div className="question-list">
           {questions.map((question) => {
@@ -167,6 +143,31 @@ export function Room() {
             );
           })}
         </div>
+
+        <form onSubmit={handleSendQuestion}>
+          <textarea
+            placeholder="Escreva sua mensagem?"
+            onChange={(event) => setNewQuestion(event.target.value)}
+            value={newQuestion}
+          />
+
+          <div className="form-footer">
+            {user ? (
+              <div className="user-info">
+                <img src={user.avatar} alt={user.name} />
+                <span>{user.name}</span>
+              </div>
+            ) : (
+              <span>
+                Para enviar uma mensagem,{" "}
+                <button onClick={signInWithGoogle}>faça seu login</button>.
+              </span>
+            )}
+            <Button type="submit" disabled={!user}>
+              Enviar
+            </Button>
+          </div>
+        </form>
       </main>
     </div>
   );
