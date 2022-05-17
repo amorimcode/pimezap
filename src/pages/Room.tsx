@@ -48,6 +48,10 @@ export function Room() {
     await database.ref(`rooms/${roomId}/questions`).push(question);
 
     setNewQuestion("");
+
+    let t: any = document.getElementsByClassName('question-list')[0]
+    t.scrollTo(0, t.scrollHeight);
+
   }
 
   async function handleLikeQuestion(
