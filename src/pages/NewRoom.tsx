@@ -1,23 +1,24 @@
 import { FormEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import illustrationImg from "../assets/images/Bom-dia-grupo-especial.webp";
+import illustrationImg from "../assets/images/bomdia.webp";
 import logoImg from "../assets/images/pimechat.png";
 
 import { Button } from "../components/Button";
-import { database } from "../services/firebase";
+import { database, firebase, auth } from "../services/firebase";
 import { useAuth } from "../hooks/useAuth";
 
 import "../styles/auth.scss";
 
 export function NewRoom() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const history = useHistory();
   const [newRoom, setNewRoom] = useState("");
 
+
+
   async function handleCreateRoom(event: FormEvent) {
     event.preventDefault();
-    alert("zap");
 
     if (newRoom.trim() === "") {
       return;

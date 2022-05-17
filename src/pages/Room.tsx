@@ -8,7 +8,7 @@ import { Question } from "../components/Question";
 import { RoomCode } from "../components/RoomCode";
 import { useAuth } from "../hooks/useAuth";
 import { useRoom } from "../hooks/useRoom";
-import { database } from "../services/firebase";
+import { database, firebase, auth } from "../services/firebase";
 
 import "../styles/room.scss";
 
@@ -17,7 +17,7 @@ type RoomParams = {
 };
 
 export function Room() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState("");
   const roomId = params.id;
@@ -65,6 +65,26 @@ export function Room() {
     }
   }
 
+  async function signInWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    const result = await auth.signInWithPopup(provider);
+
+    if (result.user) {
+      const { displayName, photoURL, uid } = result.user
+
+      if (!displayName || !photoURL) {
+        throw new Error('Missing information from Google Account.');
+      }
+
+      setUser({
+        id: uid,
+        name: displayName,
+        avatar: photoURL
+      })
+    }
+  }
+
   return (
     <div id="page-room">
       <header>
@@ -95,7 +115,7 @@ export function Room() {
               </div>
             ) : (
               <span>
-                Para enviar uma mensagem, <button>faça seu login</button>.
+                Para enviar uma mensagem, <button onClick={signInWithGoogle}>faça seu login</button>.
               </span>
             )}
             <Button type="submit" disabled={!user}>

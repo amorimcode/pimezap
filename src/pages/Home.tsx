@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { FormEvent, useState } from "react";
 
 import pimechat from "../assets/images/pimechat.png";
+import bomdia from "../assets/images/bomdia.webp";
 
 import googleIconImg from "../assets/images/google-icon.svg";
 
@@ -51,7 +52,7 @@ export function Home() {
     <div id="page-auth">
       <aside>
         <img
-          src={pimechat}
+          src={bomdia}
           alt="Ilustração simbolizando mensagens e respostas"
         />
         <strong>Crie seu grupo do ZAP</strong>
