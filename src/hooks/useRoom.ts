@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { database } from "../services/firebase";
 import { useAuth } from "./useAuth";
 
-type FirebaseQuestions = Record<string, {
+type Firebasemessages = Record<string, {
   author: {
     name: string;
     avatar: string;
@@ -16,7 +16,7 @@ type FirebaseQuestions = Record<string, {
   }>
 }>
 
-type QuestionType = {
+type messageType = {
   id: string;
   author: {
     name: string;
@@ -31,7 +31,7 @@ type QuestionType = {
 
 export function useRoom(roomId: string) {
   const { user } = useAuth();
-  const [questions, setQuestions] = useState<QuestionType[]>([])
+  const [messages, setmessages] = useState<messageType[]>([])
   const [title, setTitle] = useState('');
 
   useEffect(() => {
@@ -39,9 +39,9 @@ export function useRoom(roomId: string) {
 
     roomRef.on('value', room => {
       const databaseRoom = room.val();
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+      const firebasemessages: Firebasemessages = databaseRoom.messages ?? {};
 
-      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+      const parsedmessages = Object.entries(firebasemessages).map(([key, value]) => {
         return {
           id: key,
           content: value.content,
@@ -54,7 +54,7 @@ export function useRoom(roomId: string) {
       })
 
       setTitle(databaseRoom.title);
-      setQuestions(parsedQuestions);
+      setmessages(parsedmessages);
     })
 
     return () => {
@@ -62,5 +62,5 @@ export function useRoom(roomId: string) {
     }
   }, [roomId, user?.id]);
 
-  return { questions, title }
+  return { messages, title }
 }

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import pimechat from "../assets/images/pimechat.png";
 
 import { Button } from "../components/Button";
-import { Question } from "../components/Question";
+import { message } from "../components/message";
 import { RoomCode } from "../components/RoomCode";
 import { useAuth } from "../hooks/useAuth";
 import { useRoom } from "../hooks/useRoom";
@@ -19,15 +19,15 @@ type RoomParams = {
 export function Room() {
   const { user, setUser } = useAuth();
   const params = useParams<RoomParams>();
-  const [newQuestion, setNewQuestion] = useState("");
+  const [newmessage, setNewmessage] = useState("");
   const roomId = params.id;
 
-  const { title, questions } = useRoom(roomId);
+  const { title, messages } = useRoom(roomId);
 
-  async function handleSendQuestion(event: FormEvent) {
+  async function handleSendmessage(event: FormEvent) {
     event.preventDefault();
 
-    if (newQuestion.trim() === "") {
+    if (newmessage.trim() === "") {
       return;
     }
 
@@ -35,8 +35,8 @@ export function Room() {
       throw new Error("You must be logged in");
     }
 
-    const question = {
-      content: newQuestion,
+    const message = {
+      content: newmessage,
       author: {
         name: user.name,
         avatar: user.avatar,
@@ -45,25 +45,25 @@ export function Room() {
       isAnswered: false,
     };
 
-    await database.ref(`rooms/${roomId}/questions`).push(question);
+    await database.ref(`rooms/${roomId}/messages`).push(message);
 
-    setNewQuestion("");
+    setNewmessage("");
 
-    let t: any = document.getElementsByClassName('question-list')[0]
+    let t: any = document.getElementsByClassName('message-list')[0]
     t.scrollTo(0, t.scrollHeight);
 
   }
 
-  async function handleLikeQuestion(
-    questionId: string,
+  async function handleLikemessage(
+    messageId: string,
     likeId: string | undefined
   ) {
     if (likeId) {
       await database
-        .ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
+        .ref(`rooms/${roomId}/messages/${messageId}/likes/${likeId}`)
         .remove();
     } else {
-      await database.ref(`rooms/${roomId}/questions/${questionId}/likes`).push({
+      await database.ref(`rooms/${roomId}/messages/${messageId}/likes`).push({
         authorId: user?.id,
       });
     }
@@ -101,30 +101,30 @@ export function Room() {
       <main>
         <div className="room-title">
           <h1>Grupo {title}</h1>
-          {questions.length > 0 && <span>{questions.length} mensagem(s)</span>}
+          {messages.length > 0 && <span>{messages.length} mensagem(s)</span>}
         </div>
 
-        <div className="question-list">
-          {questions.map((question) => {
+        <div className="message-list">
+          {messages.map((message) => {
             return (
-              <Question
-                key={question.id}
-                content={question.content}
-                author={question.author}
-                isAnswered={question.isAnswered}
-                isHighlighted={question.isHighlighted}
+              <message
+                key={message.id}
+                content={message.content}
+                author={message.author}
+                isAnswered={message.isAnswered}
+                isHighlighted={message.isHighlighted}
               >
-                {!question.isAnswered && (
+                {!message.isAnswered && (
                   <button
-                    className={`like-button ${question.likeId ? "liked" : ""}`}
+                    className={`like-button ${message.likeId ? "liked" : ""}`}
                     type="button"
                     aria-label="Marcar como gostei"
                     onClick={() =>
-                      handleLikeQuestion(question.id, question.likeId)
+                      handleLikemessage(message.id, message.likeId)
                     }
                   >
-                    {question.likeCount > 0 && (
-                      <span>{question.likeCount}</span>
+                    {message.likeCount > 0 && (
+                      <span>{message.likeCount}</span>
                     )}
                     <svg
                       width="24"
@@ -143,16 +143,16 @@ export function Room() {
                     </svg>
                   </button>
                 )}
-              </Question>
+              </message>
             );
           })}
         </div>
 
-        <form onSubmit={handleSendQuestion}>
+        <form onSubmit={handleSendmessage}>
           <textarea
             placeholder="Escreva sua mensagem?"
-            onChange={(event) => setNewQuestion(event.target.value)}
-            value={newQuestion}
+            onChange={(event) => setNewmessage(event.target.value)}
+            value={newmessage}
           />
 
           <div className="form-footer">

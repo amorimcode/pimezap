@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import './styles.scss';
 
-type QuestionProps = {
+type messageProps = {
   content: string;
   author: {
     name: string;
@@ -14,17 +14,17 @@ type QuestionProps = {
   isHighlighted?: boolean;
 }
 
-export function Question({
+export function message({
   content,
   author,
   isAnswered = false,
   isHighlighted = false,
   children,
-}: QuestionProps) {
+}: messageProps) {
   return (
     <div 
       className={cx(
-        'question', 
+        'message', 
         { answered: isAnswered },
         { highlighted: isHighlighted && !isAnswered },
       )}
